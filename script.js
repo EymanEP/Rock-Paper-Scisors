@@ -20,6 +20,8 @@ switch (computerSelection) {
 }
 let playerScore = 0;
 let computerScore = 0;
+let isGamePlaying = false;
+let someoneWins = false;
 //Function for the round
 function startRound() {
 //Starting the round
@@ -94,13 +96,39 @@ function endMatch() {
         console.log("You lost, we'll get 'em next time");
     }
 }
+//Keeps track of the game, if some score changes then start again
+function gameTrack() {
+     if (playerScore++ || computerScore++) {
+        isGamePlaying = true;
+     }
+}
+//Looks if someone wins
+function someoneWon() {
+    if (playerScore === 3 || computerScore === 3) {
+        someoneWins = true;
+    }
+}
+//Determines when to finisht the game
+function gameEnds() {
+    if (playerScore > 3 || computerScore > 3) {
+        endMatch();
+    } else if (playerScore < 3 || computerScore < 3) {
+        startRound();
+    } else {
+        endMatch();
+    }
+}
 
 //Game starts
 function game() {
-    for (let i = 0; playerScore <= 3 || computerScore <= 3; i++) {
-        startRound();
-        endMatch();
-    }
+    startRound();
+        if (someoneWon()) {
+            for (let i = 0; someoneWon(); i++) {
+                startRound();
+                i++;
+            }
+        }
+    /*gameEnds();
     /*startRound();
     endMatch();*/
     
