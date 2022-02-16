@@ -98,16 +98,16 @@ function roundStart() {
 
 //Detect if someoneWon changes to repeat the round
 function game() {
-    for (let i = 0;i < 9; i++) {
+    for (let i = 0;i < 125; i++) {
         roundStart();
         console.log("Your score is " + playerScore + " and the computer's score is " + computerScore);
-        if (playerScore >=3) {
+        if (playerScore >=5) {
             console.log("Player Won");
             break;
-        } else if (computerScore >= 3) {
+        } else if (computerScore >= 5) {
             console.log("Computer won");
             break;
-        } else if (invalidCounter >= 3){
+        } else if (invalidCounter >= 5){
             console.log("You made too many invalid picks, try again");
             break;
         } else {
