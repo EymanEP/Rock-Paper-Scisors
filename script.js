@@ -1,34 +1,41 @@
-//Global variables
-let userInput = prompt("What do you want to play: rock, paper or scisors");
-let playerSelection = userInput.toLowerCase();
+//Player variables
+let playerInput;
+//Array for translation
 let computerArr = [
     "Rock",
     "Paper",
     "Scisors"
 ];
-let computerSelection =  Math.floor(Math.random() * computerArr.length);
-//Traduction of computer selection
-switch (computerSelection) {
-    case 0:
-        computerSelection = "Rock";
-        break;
-    case 1:
-        computerSelection = "Paper";
-        break;
-    case 2:
-        computerSelection = "Scisors";
-}
+
+/*----------------------------------------------------*/
+//Players score
 let playerScore = 0;
 let computerScore = 0;
-let isGamePlaying = false;
-let someoneWins = false;
-//Function for the round
-function startRound() {
-//Starting the round
-    console.log("You picked " + playerSelection + " and the computer picked " + computerSelection);
-//Messages
+let invalidCounter = 0;
+
+//Round function
+function roundStart() {
+    //Starts the input
+    playerInput = prompt("What do you want to play: rock, paper or scisors").toLowerCase();
+    //Starting the round
+    //Let the computer pick a random number with the array
+    let computerSelection = Math.floor(Math.random() * computerArr.length);
+    //Translate the number picked to an actual word
+    switch (computerSelection) {
+        case 0:
+            computerSelection = "Rock";
+            break;
+        case 1:
+            computerSelection = "Paper";
+            break;
+        case 2:
+            computerSelection = "Scisors";
+    };
+    //Logs the picked items
+    console.log("You picked " + playerInput + " and the computer picked " + computerSelection);
+    //Messages
     //win
-    function winMessage(){
+    function winMessage() {
         console.log("You won, congratulations!");
     }
     //lose
@@ -43,95 +50,69 @@ function startRound() {
     function invalidMessage() {
         console.log("That is an invalid pick");
     }
-//<--------------------------------------------------------------->
-//Play
+    //<--------------------------------------------------------------->
+    //Play
     //Computer picked rock
     if (computerSelection === "Rock") {
-        if (playerSelection === "rock") {
+        if (playerInput === "rock") {
             tieMessage();
-        } else if (playerSelection === "paper") {
+        } else if (playerInput === "paper") {
             winMessage();
             playerScore++;
-        } else if (playerSelection === "scisors") {
+        } else if (playerInput === "scisors") {
             loseMessage();
             computerScore++;
         } else {
-            invalidMessage()
+            invalidMessage();
+            invalidCounter++;
         }
-    //Computer picked paper
+        //Computer picked paper
     } else if (computerSelection === "Paper") {
-        if (playerSelection === "rock") {
+        if (playerInput === "rock") {
             loseMessage();
             computerScore++;
-        } else if (playerSelection === "paper") {
+        } else if (playerInput === "paper") {
             tieMessage();
-        } else if (playerSelection === "scisors") {
+        } else if (playerInput === "scisors") {
             winMessage();
             playerScore++;
         } else {
             invalidMessage();
+            invalidCounter++;
         }
-    //Computer picked scisors
     } else if (computerSelection === "Scisors") {
-        if (playerSelection === "rock") {
+         if (playerInput === "rock") {
+             loseMessage();
+             computerScore++;
+         } else if(playerInput === "paper") {
             winMessage();
             playerScore++;
-        } else if (playerSelection === "paper") {
-            loseMessage();
-            computerScore++;
-        } else if (playerSelection === "scisors") {
-            tieMessage();
-        } else {
-            invalidMessage();
-        }
-    }
-    endMatch()
-}
-
-//Determines who won or lost
-function endMatch() {
-    if (playerScore == 3) {
-        console.log("You won the match!");
-    } else if (computerScore == 3) {
-        console.log("You lost, we'll get 'em next time");
-    }
-}
-//Keeps track of the game, if some score changes then start again
-function gameTrack() {
-     if (playerScore++ || computerScore++) {
-        isGamePlaying = true;
-     }
-}
-//Looks if someone wins
-function someoneWon() {
-    if (playerScore === 3 || computerScore === 3) {
-        someoneWins = true;
-    }
-}
-//Determines when to finisht the game
-function gameEnds() {
-    if (playerScore > 3 || computerScore > 3) {
-        endMatch();
-    } else if (playerScore < 3 || computerScore < 3) {
-        startRound();
-    } else {
-        endMatch();
+         } else if (playerInput === "scisors") {
+             tieMessage();
+         } else {
+             invalidMessage();
+             invalidCounter++;
+         }
     }
 }
 
-//Game starts
+//Detect if someoneWon changes to repeat the round
 function game() {
-    startRound();
-        if (someoneWon()) {
-            for (let i = 0; someoneWon(); i++) {
-                startRound();
-                i++;
-            }
+    for (let i = 0;i < 9; i++) {
+        roundStart();
+        console.log("Your score is " + playerScore + " and the computer's score is " + computerScore);
+        if (playerScore >=3) {
+            console.log("Player Won");
+            break;
+        } else if (computerScore >= 3) {
+            console.log("Computer won");
+            break;
+        } else if (invalidCounter >= 3){
+            console.log("You made too many invalid picks, try again");
+            break;
+        } else {
+            roundStart();
         }
-    /*gameEnds();
-    /*startRound();
-    endMatch();*/
-    
+    }
 }
-
 game();
