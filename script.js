@@ -98,7 +98,7 @@ function roundStart() {
 
 //Detect if someoneWon changes to repeat the round
 function game() {
-    for (let i = 0;i < 125; i++) {
+    for (let i = 0;i < 15; i++) {
         roundStart();
         console.log("Your score is " + playerScore + " and the computer's score is " + computerScore);
         if (playerScore >=5) {
